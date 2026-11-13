@@ -1,0 +1,282 @@
+ASTROFRONTIER · Voice lines for recording (optional)
+=====================================================
+Want a real human voice? Record each line below as an .mp3 with the file name shown,
+put the files in the  voice/  folder next to index.html, then in the add-on set:
+    const USE_RECORDED_VOICES = true;
+Any line without a file still uses the browser voice. Miaw Miaw's meows, screen signs and video changes are made by the site.
+
+
+── 🌙 A little girl with a big dream
+s01-01.mp3  [Narrator]  Somewhere on Earth, there lived a little girl named Shasha.
+s01-02.mp3  [Narrator]  She was a dreamer, a storyteller and a curious explorer at heart.
+s01-03.mp3  [Narrator]  Every night, she would look up at the stars and wonder what mysteries were hiding beyond the clouds.
+
+── 🚀 The mysterious rocket
+s02-02.mp3  [Shasha]  Wait... what's that sound?
+s02-03.mp3  [Shasha]  WHOA! MIAW MIAW! LOOK!
+s02-04.mp3  [Shasha]  Is that... a ROCKET?!
+s02-06.mp3  [Shasha]  Don't be scared! Maybe it's here to take us on an adventure!
+s02-08.mp3  [Shasha]  MARS?! This is our chance!
+s02-09.mp3  [Shasha]  Come on, Miaw Miaw! We're going to space!
+
+── 🔥 Three, two, one... Liftoff!
+s03-01.mp3  [Shasha]  Okay, Miaw Miaw! Are you ready?
+s03-03.mp3  [Shasha]  Don't worry! I'll take care of you.
+s03-04.mp3  [Rocket computer]  Destination confirmed. Mars mission commencing.
+s03-05.mp3  [Rocket computer]  Ten... nine... eight...
+s03-06.mp3  [Shasha]  This is really happening!
+s03-07.mp3  [Rocket computer]  Three... two... one...
+s03-09.mp3  [Rocket computer]  LIFTOFF!
+s03-11.mp3  [Shasha]  WHOOOO! WE'RE FLYING!
+s03-13.mp3  [Shasha]  Wow... Miaw Miaw, look at Earth! It's so beautiful!
+s03-15.mp3  [Shasha]  Everything looks so tiny from up here. I can't believe we're actually travelling through space!
+s03-16.mp3  [Rocket computer]  Approaching destination. Mars is now within visual range.
+s03-17.mp3  [Shasha]  WE'RE HERE! MIAW MIAW, WE'RE REALLY GOING TO MARS!
+
+── ✨ The magical journey begins
+s04-01.mp3  [Narrator]  Suddenly, a tiny golden light appears on the picture of Mars.
+s04-02.mp3  [Narrator]  The light spreads across the pages, floating into the air like thousands of glowing fireflies.
+s04-03.mp3  [Narrator]  A magical circular portal opens above her book.
+s04-04.mp3  [Shasha]  Whoa! What's happening?
+s04-06.mp3  [Shasha]  Come on, Miaw Miaw! I think we're going on an adventure!
+
+── 🔴 The Forgotten Heroes of Mars
+s05-01.mp3  [Narrator]  The Forgotten Heroes of Mars.
+s05-02.mp3  [Narrator]  A Journey Beyond the Stars.
+s05-03.mp3  [Narrator]  An AstroFrontier Story.
+
+── 🛠️ Two little explorers are born
+s06-01.mp3  [Narrator]  Long before Shasha arrived on Mars, two extraordinary explorers were born on Earth.
+s06-02.mp3  [Narrator]  Their names were Spirit and Opportunity.
+s06-03.mp3  [Narrator]  They were not ordinary machines.
+s06-04.mp3  [Narrator]  They were designed to become humanity's eyes and hands on another planet.
+
+── 👯 Why build two?
+s07-01.mp3  [Narrator]  Their mission was to investigate the rocks and soil of Mars, searching for evidence that water had once existed there.
+s07-02.mp3  [Narrator]  But there was a problem.
+s07-03.mp3  [Narrator]  Mars missions were difficult, expensive and risky.
+s07-04.mp3  [Narrator]  After two previous Mars missions had failed, NASA needed to make this mission count.
+s07-05.mp3  [Narrator]  So, instead of sending one rover, NASA built two.
+
+── 🚀 Launch day
+s08-01.mp3  [Narrator]  They were given a simple mission: survive for just 90 Martian days.
+s08-02.mp3  [Narrator]  But nobody knew that these two little machines would become some of the greatest explorers in the history of Mars.
+
+── 🎈 The bouncing landing
+s09-01.mp3  [Narrator]  Landing on Mars was no easy task.
+s09-02.mp3  [Narrator]  Its atmosphere was too thin for a parachute alone to bring the spacecraft safely to the ground.
+s09-03.mp3  [Narrator]  So NASA engineers came up with a remarkable solution: giant airbags!
+s09-04.mp3  [Narrator]  Spirit bounced across the surface 28 times before finally coming to rest inside Gusev Crater.
+
+── 👀 It really made it!
+s10-01.mp3  [Shasha]  Wow... it actually made it! It's really on Mars!
+s10-03.mp3  [Shasha]  But wait... it was only supposed to stay for 90 days?
+s10-04.mp3  [Narrator]  Yes.
+s10-05.mp3  [Narrator]  Ninety days.
+s10-06.mp3  [Narrator]  That was the plan.
+s10-07.mp3  [Narrator]  But Spirit was about to prove that even a little machine could accomplish something extraordinary.
+
+── ⚠️ The unexpected injury
+s11-01.mp3  [Shasha]  Oh no! Is something wrong with Spirit?
+s11-02.mp3  [Narrator]  Spirit had suffered a serious problem.
+s11-03.mp3  [Narrator]  Its right-front wheel was no longer working properly, and eventually, it stopped functioning altogether.
+s11-04.mp3  [Narrator]  For many explorers, losing a wheel would mean the end of the journey.
+s11-05.mp3  [Narrator]  But NASA's engineers refused to give up.
+
+── ↩️ Driving backwards
+s12-01.mp3  [Narrator]  They found a way to keep Spirit moving.
+s12-02.mp3  [Narrator]  Instead of driving forward normally, Spirit had to travel backwards, dragging its broken wheel across the Martian ground.
+s12-03.mp3  [Shasha]  Wait... it's still exploring? Even with a broken wheel?
+s12-04.mp3  [Narrator]  Yes.
+s12-05.mp3  [Narrator]  And what happened next was something nobody expected.
+
+── ⚪ A broken wheel uncovers a secret
+s13-01.mp3  [Shasha]  Why is that patch so bright? Is it a special kind of rock?
+s13-02.mp3  [Narrator]  Scientists discovered that the bright soil contained almost pure silica, a material commonly found in glass.
+s13-03.mp3  [Narrator]  On Earth, deposits of silica like this can form around hot springs and steam vents.
+s13-04.mp3  [Narrator]  That meant ancient Mars may once have had environments where hot water flowed beneath or across its surface.
+
+── ♨️ A very different Mars
+s14-01.mp3  [Shasha]  So... Mars wasn't always the cold and dry planet we see today?
+s14-02.mp3  [Narrator]  Exactly.
+s14-03.mp3  [Narrator]  Spirit's broken wheel had accidentally uncovered evidence of a very different Mars.
+s14-04.mp3  [Narrator]  A Mars that may once have been warmer, wetter and filled with environments shaped by water.
+s14-05.mp3  [Shasha]  That's incredible! Sometimes, even the things that go wrong can lead us to something amazing.
+
+── 🕳️ Trapped at Troy
+s15-01.mp3  [Narrator]  After years of exploring, Spirit became trapped in soft sand at a place called Troy.
+s15-02.mp3  [Narrator]  Its wheels could no longer carry it forward.
+s15-03.mp3  [Narrator]  But its mission was not immediately over.
+s15-04.mp3  [Narrator]  NASA decided to turn Spirit into a stationary science station, allowing it to continue collecting valuable information about Mars.
+s15-05.mp3  [Narrator]  Then winter arrived.
+
+── ❄️ The last winter of Spirit
+s16-01.mp3  [Narrator]  On March 22, 2010, Spirit sent its last signal home.
+s16-02.mp3  [Narrator]  NASA continued trying to contact it, sending more than 1,300 commands over the following months.
+s16-03.mp3  [Narrator]  But no answer came.
+s16-04.mp3  [Narrator]  The most likely explanation was that the freezing Martian winter had become too much for its heaters to overcome.
+s16-05.mp3  [Shasha]  Spirit... you worked so hard.
+s16-06.mp3  [Shasha]  Even though you couldn't move anymore, you left something important behind.
+s16-07.mp3  [Narrator]  Spirit's journey had ended, but its discoveries would continue helping scientists understand the history of Mars.
+
+── 🌍 Meanwhile, on the other side of Mars
+s17-01.mp3  [Narrator]  While Spirit was exploring Gusev Crater, its twin, Opportunity, was arriving on the opposite side of Mars.
+s17-02.mp3  [Narrator]  Opportunity had travelled millions of kilometres to reach its new home.
+s17-03.mp3  [Narrator]  And its landing was almost unbelievable.
+
+── ⛳ A hole-in-one landing
+s18-01.mp3  [Narrator]  After bouncing at least 26 times inside its protective airbags, Opportunity came to rest inside a small crater called Eagle.
+s18-02.mp3  [Shasha]  Hahaha! It landed right inside the crater! That's like a hole-in-one!
+s18-04.mp3  [Narrator]  And what waited inside that crater would become one of the first major clues in Opportunity's investigation.
+
+── 🫐 The mysterious Martian blueberries
+s19-01.mp3  [Shasha]  Blueberries?! Are there really blueberries growing on Mars?
+s19-03.mp3  [Narrator]  They weren't real blueberries, of course.
+s19-04.mp3  [Narrator]  Scientists nicknamed them Martian blueberries because of their small, round appearance.
+s19-05.mp3  [Narrator]  These little spheres were made of a mineral called hematite.
+s19-06.mp3  [Narrator]  On Earth, this kind of mineral commonly forms in environments involving water.
+
+── 💧 Tiny clues
+s20-01.mp3  [Narrator]  Scientists believe acidic groundwater once soaked the rocks on Mars, helping these tiny mineral spheres develop.
+s20-02.mp3  [Shasha]  So these tiny rocks are actually clues that water existed here long ago?
+s20-03.mp3  [Narrator]  Exactly.
+s20-04.mp3  [Narrator]  Sometimes, the smallest things can tell us the biggest stories.
+
+── 🛞 A journey longer than anyone imagined
+s21-01.mp3  [Narrator]  Opportunity was designed to travel approximately one kilometre during its 90-day mission.
+s21-02.mp3  [Narrator]  But something extraordinary happened.
+s21-03.mp3  [Narrator]  It kept going.
+s21-04.mp3  [Narrator]  And going.
+s21-05.mp3  [Narrator]  And going.
+s21-06.mp3  [Narrator]  One year passed.
+s21-07.mp3  [Narrator]  Then another.
+s21-08.mp3  [Narrator]  Then another.
+s21-09.mp3  [Narrator]  The little rover that was only supposed to work for three months continued exploring Mars for almost 15 years.
+
+── ⏳ Trapped in Purgatory
+s22-01.mp3  [Shasha]  Oh no! Not another rover getting stuck!
+s22-02.mp3  [Narrator]  In 2005, Opportunity encountered a dangerous sand ripple that became known as Purgatory.
+s22-03.mp3  [Narrator]  Its wheels sank into the soft ground, and it could not escape.
+s22-04.mp3  [Narrator]  For six weeks, engineers on Earth carefully planned and tested different ways to free it.
+s22-05.mp3  [Narrator]  They had to be extremely careful.
+s22-06.mp3  [Narrator]  One wrong movement could have made the situation even worse.
+s22-07.mp3  [Shasha]  YES! You made it!
+
+── 🏅 The marathon on another world
+s23-01.mp3  [Narrator]  On March 25, 2015, Opportunity achieved something extraordinary.
+s23-02.mp3  [Narrator]  It became the first rover to complete a full marathon distance on another world.
+s23-03.mp3  [Narrator]  Forty-two point one nine five kilometres.
+s23-04.mp3  [Narrator]  Imagine that!
+s23-05.mp3  [Shasha]  That's amazing! It didn't just survive. It became a champion!
+
+── 📏 Record after record
+s24-01.mp3  [Narrator]  Opportunity continued to break records.
+s24-02.mp3  [Narrator]  It travelled farther than the Apollo 17 Moon buggy and the Soviet Lunokhod 2 rover, and its Mars driving record eventually reached 45.
+s24-03.mp3  [Narrator]  16 kilometres.
+s24-04.mp3  [Narrator]  But the most important part of its journey wasn't how far it travelled.
+s24-05.mp3  [Narrator]  It was what it discovered along the way.
+
+── 🧭 Following the traces of ancient water
+s25-01.mp3  [Narrator]  After a long journey, Opportunity arrived at Endeavour Crater.
+s25-02.mp3  [Narrator]  There, it discovered something special.
+s25-03.mp3  [Narrator]  A narrow vein of gypsum called Homestake.
+s25-04.mp3  [Shasha]  What's gypsum?
+
+── 🪨 The Homestake vein
+s26-01.mp3  [Narrator]  Gypsum is a mineral that can form when water flows through cracks in rocks and leaves minerals behind.
+s26-02.mp3  [Narrator]  This discovery provided strong evidence that liquid water once flowed through parts of Mars.
+s26-03.mp3  [Narrator]  And there was something even more exciting.
+
+── 🏞️ Gentler water
+s27-01.mp3  [Narrator]  Some of the ancient water environments revealed at Endeavour appeared to have been gentler, more like ponds or lakes than the acidic environments suggested by earlier discoveries.
+
+── 🔭 One story, two places
+s28-01.mp3  [Shasha]  So Spirit and Opportunity were actually telling us the same story from two different places!
+s28-02.mp3  [Narrator]  Yes.
+s28-03.mp3  [Narrator]  Spirit discovered clues of ancient hot springs.
+s28-04.mp3  [Narrator]  Opportunity found signs of groundwater and water flowing through rocks.
+s28-05.mp3  [Narrator]  Together, their discoveries helped scientists understand that ancient Mars was very different from the dry, cold world we see today.
+
+── 🌪️ The storm that covered an entire planet
+s29-01.mp3  [Narrator]  Opportunity had survived for almost 15 years.
+s29-02.mp3  [Narrator]  It had crossed craters, climbed slopes, escaped dangerous sand traps and travelled farther than anyone had expected.
+s29-03.mp3  [Narrator]  But in June 2018, Mars faced something extraordinary.
+s29-04.mp3  [Narrator]  A planet-wide dust storm began spreading across the surface.
+
+── 🔋 Waiting for the Sun
+s30-01.mp3  [Narrator]  The dust blocked sunlight from reaching Opportunity's solar panels.
+s30-02.mp3  [Narrator]  Without enough sunlight, the rover could no longer generate the electrical power it needed to operate.
+s30-03.mp3  [Shasha]  Can't it just wait until the storm passes?
+s30-05.mp3  [Narrator]  That was exactly what engineers hoped would happen.
+s30-06.mp3  [Narrator]  They waited.
+s30-07.mp3  [Narrator]  And waited.
+s30-08.mp3  [Narrator]  But the storm continued.
+
+── 📷 The last picture
+s31-01.mp3  [Narrator]  On June 10, 2018, Opportunity sent its final signal to Earth.
+s31-02.mp3  [Narrator]  It was its 5,111th Martian day.
+s31-03.mp3  [Narrator]  Its last image was an unfinished, dark photograph of the sky.
+s31-04.mp3  [Narrator]  After almost 15 years of exploration, the little rover had fallen silent.
+s31-05.mp3  [Shasha]  All those years... all those discoveries...
+s31-06.mp3  [Shasha]  I hope someone still remembers you.
+
+── 📡 One last listen
+s32-01.mp3  [Narrator]  For eight months, NASA engineers continued trying to contact Opportunity.
+s32-02.mp3  [Narrator]  They sent more than a thousand commands.
+s32-03.mp3  [Narrator]  They listened for a response.
+s32-04.mp3  [Narrator]  They waited for a signal that might never come.
+s32-05.mp3  [Narrator]  On February 12, 2019, NASA made one final attempt to reach its little explorer.
+s32-06.mp3  [Narrator]  But this time, there was no answer.
+
+── 🕯️ February 13, 2019
+s33-01.mp3  [Narrator]  February 13, 2019.
+s33-02.mp3  [Narrator]  NASA officially declared the Opportunity mission complete.
+s33-03.mp3  [Narrator]  Project manager John Callas said: Farewell, Opportunity, and well done.
+
+── 🗺️ Their final resting places
+s34-01.mp3  [Narrator]  Today, Spirit and Opportunity remain on Mars.
+s34-02.mp3  [Narrator]  They never returned to Earth.
+s34-03.mp3  [Narrator]  They never received medals.
+s34-04.mp3  [Narrator]  They never stood before the people who built them.
+
+── 🌟 A trail of discoveries
+s35-01.mp3  [Narrator]  But they left something much more valuable behind.
+s35-02.mp3  [Narrator]  They left behind a trail of discoveries, photographs and scientific evidence that helped humanity understand the history of another world.
+s35-03.mp3  [Shasha]  They were just machines... but they did so much.
+s35-04.mp3  [Shasha]  Do you think their stories will ever be forgotten?
+
+── 🤖 The explorers who inspired a new generation
+s36-01.mp3  [Narrator]  Although Spirit and Opportunity could no longer continue their missions, their work was never wasted.
+s36-02.mp3  [Narrator]  Their discoveries helped scientists design better missions and inspired a new generation of engineers, scientists and explorers.
+s36-03.mp3  [Narrator]  The technology and experience gained from these two little rovers helped shape the future of Mars exploration, including the missions of Curiosity and Perseverance.
+
+── 📚 Everything we learn along the way
+s37-01.mp3  [Narrator]  And there was something else they left behind.
+s37-02.mp3  [Narrator]  A reminder that exploration is not simply about reaching a destination.
+s37-03.mp3  [Narrator]  It is about everything we learn along the way.
+
+── 🌌 The meaning of being an explorer
+s38-01.mp3  [Shasha]  I used to think that explorers were only the ones who came home with their discoveries.
+s38-03.mp3  [Shasha]  But now I understand something.
+s38-04.mp3  [Shasha]  Even if an explorer cannot come home, their discoveries can travel across the universe.
+s38-05.mp3  [Narrator]  Spirit and Opportunity were never meant to last forever.
+s38-06.mp3  [Narrator]  They were built to work for just 90 Martian days.
+s38-07.mp3  [Narrator]  Yet Spirit explored for more than six years, and Opportunity continued for almost 15 years.
+
+── 🔭 The knowledge lives on
+s39-01.mp3  [Narrator]  They faced broken wheels, dangerous sand, freezing winters and planet-wide dust storms.
+s39-02.mp3  [Narrator]  They were machines, but their missions showed us something extraordinary.
+s39-03.mp3  [Narrator]  That even when an explorer reaches the end of its journey, the knowledge it leaves behind can inspire others to continue.
+
+── 💫 A message to you
+s40-01.mp3  [Narrator]  Thousands of stars shine around Shasha.
+s40-02.mp3  [Narrator]  She turns towards you.
+s40-03.mp3  [Shasha]  Maybe one day, you will become a scientist, an engineer, an astronaut or even a storyteller.
+s40-04.mp3  [Shasha]  Maybe you will build something that travels further than anyone has ever imagined.
+s40-06.mp3  [Shasha]  And maybe, somewhere out there, another little explorer will be waiting to tell you its story.
+
+── ⭐ Every great explorer leaves a story
+s41-01.mp3  [Shasha]  So, the next time you look up at the night sky, remember...
+s41-02.mp3  [Shasha]  Not every hero comes home. But every great explorer leaves a story behind.
+s41-03.mp3  [Narrator]  Every explorer leaves a story.
+s41-04.mp3  [Narrator]  Every story inspires a new journey.
