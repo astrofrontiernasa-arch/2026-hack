@@ -713,7 +713,7 @@ footer{
   </div>
   <div class="nav-links">
     <a href="#section-home" onclick="scrollToHome()">Home</a>
-    <a href="#" onclick="openStory();return false;">Story</a>
+    <a href="#" onclick="openChapterMenu();return false;">Story</a>
     <a href="#section-probe">Probe</a>
   </div>
 </nav>
@@ -745,7 +745,7 @@ footer{
   </p>
 
   <div class="hero-btns">
-    <button class="btn-primary" onclick="openStory()">🌌 Explore the Story</button>
+    <button class="btn-primary" onclick="openChapterMenu()">🌌 Explore the Story</button>
     <a href="#section-probe" class="btn-secondary">🔭 Meet the Probe</a>
   </div>
 
@@ -1593,21 +1593,24 @@ const AF_STORY = [
   /* pictures floating on top of the video (not buttons). x = centre across, y = feet from top, h = height (all % of the screen); xm/ym/hm = phone */
   cast:[{src:'shasha-stand.webp', who:'shasha', x:50, y:93, h:46, xm:36, ym:84, hm:30},
         {src:'miaw-wave.webp', who:'miaw', x:66, y:93, h:27, xm:72, ym:84, hm:17}],
-  desc:"Somewhere on Earth, there lived a little girl named Shasha. She was a dreamer, a storyteller and a curious explorer at heart. Every night, she would look up at the stars and wonder what mysteries were hiding beyond the clouds."},
+  desc:"In a little house, under a sky filled with countless stars, lived a girl named Shasha. Shasha was not an ordinary girl — she loved everything about space! She loved the planets, the stars, the astronauts, and the mysterious machines that travelled far beyond Earth. Every night, she would look through her telescope and dream about visiting the Moon.",
+  post:[{s:"Wow! Look at the Moon, Miaw Miaw! I wonder what it would feel like to walk on its surface."},
+        {m:"Meow?"},
+        {s:"Wouldn't it be amazing if we could travel all the way up there?"},
+        {n:"Little did Shasha know, her dream was about to come true."}]},
  {badge:'Act 2 · Scene 2', title:'🚀 The mysterious rocket', art:'bedroom2', video:'scene2-rocket.mp4', track:'scene2-music.mp3',
   cast:[{src:'shasha-stand.webp', who:'shasha', x:50, y:93, h:46, xm:36, ym:84, hm:30},
         {src:'miaw-wave.webp', who:'miaw', x:66, y:93, h:27, xm:72, ym:84, hm:17, hide:{x:57, y:91, h:22, xm:47, ym:83, hm:14}}],
-  quiet:true,   /* this page has no narrator: the characters tell it */
-  desc:"A bright light appears outside Shasha's window. A small futuristic rocket, with a rounded glass cockpit, glowing blue engines and a silver body, lands in her garden.",
-  post:[{m:"Meow?!"},
-        {s:"Wait... what's that sound?"},
-        {s:"WHOA! MIAW MIAW! LOOK!"},
-        {s:"Is that... a ROCKET?!"},
-        {m:"Mew...", act:'hide'},
-        {s:"Don't be scared! Maybe it's here to take us on an adventure!"},
-        {sign:"ROCKET DESTINATION: MARS", x:62, y:40, xm:62, ym:30},
-        {s:"MARS?! This is our chance!"},
-        {s:"Come on, Miaw Miaw! We're going to space!"}]},
+  desc:"Suddenly, a strange light flashed outside Shasha's window. A low rumbling sound filled the night. Something was landing in the garden!",
+  post:[{sfx:'land'},
+        {s:"What was that?!"},
+        {m:"MEOW?!"},
+        {s:"Look, Miaw Miaw! It's a rocket!"},
+        {n:"Shasha could hardly believe her eyes. A mysterious rocket had appeared right outside her home. Its door slowly opened, revealing a glowing staircase leading inside."},
+        {s:"Do you think it's for us?"},
+        {m:"Meow...", act:'hide'},
+        {s:"Come on, Miaw Miaw! Let's find out where it takes us!"},
+        {n:"With excitement in her heart and Miaw Miaw in her arms, Shasha stepped inside. She had no idea what adventure was waiting for them."}]},
  {badge:'Act 2 · Scene 3', title:'🔥 Three, two, one... Liftoff!', art:'launch', video:'scene3-garden.mp4', track:'scene3-music.mp3',
   cast:[{src:'shasha-stand.webp', who:'shasha', x:24, y:95, h:44, xm:24, ym:84, hm:28},
         {src:'miaw-wave.webp', who:'miaw', x:37, y:95, h:26, xm:68, ym:84, hm:16}],
@@ -2739,6 +2742,9 @@ const AFV = {voice: !!window.speechSynthesis, music: true, cc: false, paused: fa
 const save = (k, v) => { try { localStorage.setItem('af-' + k, v ? '1' : '0'); } catch (e) {} };
 const load = (k, d) => { try { const v = localStorage.getItem('af-' + k); return v == null ? d : v === '1'; } catch (e) { return d; } };
 AFV.voice = load('voice', AFV.voice) && !!window.speechSynthesis; AFV.music = load('music', true); AFV.cc = load('cc', !AFV.voice);
+/* Speaking-speed control (narrator/computer/Shasha voices only — background music keeps its own normal speed) */
+let AF_SPEED = (function () { try { const v = parseFloat(localStorage.getItem('af-speed')); return (v === 1 || v === 1.5 || v === 2) ? v : 1; } catch (e) { return 1; } })();
+function saveSpeed(v) { try { localStorage.setItem('af-speed', v); } catch (e) {} }
 
 /* ---------- Music engine ---------- */
 let AC = null, master = null, rev = null, active = null, timer = 0, noiseBuf = null;
@@ -2934,9 +2940,9 @@ function speakTTS(it, tok, done) {
   const say = () => {
     if (tok !== AFV.token || AFV.paused) return; if (i >= parts.length) return done();
     const u = new SpeechSynthesisUtterance(parts[i] + (i < parts.length - 1 && !/[.!?,]$/.test(parts[i]) ? ',' : '')); if (v) u.voice = v;
-    if (it.who === 'shasha') { u.pitch = /\bana\b/i.test(v ? v.name : '') ? 1.05 : nat ? 1.2 : 1.3; u.rate = nat ? 1.0 : .98; }
-    else if (it.who === 'computer') { u.pitch = .55; u.rate = .86; }
-    else { u.pitch = 1.0; u.rate = nat ? .92 : .88; }
+    if (it.who === 'shasha') { u.pitch = /\bana\b/i.test(v ? v.name : '') ? 1.05 : nat ? 1.2 : 1.3; u.rate = (nat ? 1.0 : .98) * AF_SPEED; }
+    else if (it.who === 'computer') { u.pitch = .55; u.rate = .86 * AF_SPEED; }
+    else { u.pitch = 1.0; u.rate = (nat ? 1.18 : 1.12) * AF_SPEED; } /* narrator speaks faster, and scales further with the speed control */
     u.onend = () => { i++; setTimeout(say, i < parts.length ? 380 : 0); }; u.onerror = () => { i = parts.length; done(); };
     speechSynthesis.speak(u);
   };
@@ -2949,16 +2955,22 @@ function catBus() { if (!AC) return null; if (!catOut) { catOut = AC.createGain(
 function meow(t, kind, len = 1, ask = false) {
   const out = catBus(); if (!out) return 0;
   const dur = (kind === 'mew' ? .3 : kind === 'mrr' ? .42 : .55) * len, f0 = (kind === 'mew' ? 880 : kind === 'mrr' ? 430 : 640) * (.95 + Math.random() * .1);
-  const o = AC.createOscillator(); o.type = 'sawtooth';
-  o.frequency.setValueAtTime(f0 * .8, t); o.frequency.linearRampToValueAtTime(f0 * 1.3, t + dur * .35); o.frequency.linearRampToValueAtTime(ask ? f0 * 1.55 : f0 * .72, t + dur);
-  const vib = AC.createOscillator(), vg = AC.createGain(); vib.frequency.value = 7; vg.gain.value = 12; vib.connect(vg); vg.connect(o.frequency);
+  /* main voice: a softer triangle tone (was sawtooth) for a sweeter, less buzzy meow */
+  const o = AC.createOscillator(); o.type = 'triangle';
+  o.frequency.setValueAtTime(f0 * .82, t); o.frequency.linearRampToValueAtTime(f0 * 1.28, t + dur * .38); o.frequency.linearRampToValueAtTime(ask ? f0 * 1.6 : f0 * .78, t + dur);
+  const vib = AC.createOscillator(), vg = AC.createGain(); vib.frequency.value = 6.5; vg.gain.value = 9; vib.connect(vg); vg.connect(o.frequency);
+  /* a gentle sine sparkle an octave above, fading in for a pretty, bell-like shimmer */
+  const sp = AC.createOscillator(), spg = AC.createGain(); sp.type = 'sine';
+  sp.frequency.setValueAtTime(f0 * 1.64, t); sp.frequency.linearRampToValueAtTime(f0 * (ask ? 3.2 : 1.56), t + dur);
+  spg.gain.setValueAtTime(0.0001, t); spg.gain.linearRampToValueAtTime(.12, t + dur * .55); spg.gain.exponentialRampToValueAtTime(0.0001, t + dur + .05);
   const mix = AC.createGain(); mix.gain.value = 1;
-  [[700, 1500, 800, 6, .9], [1800, 2700, 1300, 9, .45]].forEach(([a, b, c, q, gn]) => { const f = AC.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = q;
+  [[650, 1450, 820, 5.5, .85], [1700, 2500, 1250, 8, .35]].forEach(([a, b, c, q, gn]) => { const f = AC.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = q;
     f.frequency.setValueAtTime(a, t); f.frequency.linearRampToValueAtTime(b, t + dur * .4); f.frequency.linearRampToValueAtTime(c, t + dur); const g = AC.createGain(); g.gain.value = gn; o.connect(f); f.connect(g); g.connect(mix); });
-  const amp = AC.createGain(); amp.gain.setValueAtTime(0.0001, t); amp.gain.exponentialRampToValueAtTime(.5, t + .04); amp.gain.setValueAtTime(.5, t + dur * .7); amp.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  sp.connect(spg); spg.connect(mix);
+  const amp = AC.createGain(); amp.gain.setValueAtTime(0.0001, t); amp.gain.exponentialRampToValueAtTime(.52, t + .05); amp.gain.setValueAtTime(.52, t + dur * .7); amp.gain.exponentialRampToValueAtTime(0.0001, t + dur);
   if (kind === 'mrr') { const tr = AC.createOscillator(), tg = AC.createGain(); tr.frequency.value = 26; tg.gain.value = .25; tr.connect(tg); tg.connect(amp.gain); tr.start(t); tr.stop(t + dur); }
-  mix.connect(amp); amp.connect(out); const s = AC.createGain(); s.gain.value = .25; amp.connect(s); s.connect(rev);
-  o.start(t); vib.start(t); o.stop(t + dur + .05); vib.stop(t + dur + .05); return dur;
+  mix.connect(amp); amp.connect(out); const s = AC.createGain(); s.gain.value = .4; amp.connect(s); s.connect(rev);
+  o.start(t); vib.start(t); sp.start(t); o.stop(t + dur + .05); vib.stop(t + dur + .05); sp.stop(t + dur + .05); return dur;
 }
 function sniff(t) { const out = catBus(); if (!out) return 0; for (let i = 0; i < 2; i++) { const s = AC.createBufferSource(), f = AC.createBiquadFilter(), g = AC.createGain(), tt = t + i * .2; s.buffer = noiseBuf; f.type = 'bandpass'; f.frequency.value = 3000; f.Q.value = 1.5; s.connect(f); f.connect(g); g.gain.setValueAtTime(0.0001, tt); g.gain.exponentialRampToValueAtTime(.25, tt + .03); g.gain.exponentialRampToValueAtTime(0.0001, tt + .12); g.connect(out); s.start(tt, Math.random()); s.stop(tt + .15); } return .45; }
 /* reads text like "Sniff sniff... meow?" or "Meeeow!" and plays it; returns seconds */
@@ -2999,12 +3011,12 @@ function voiceFor(who) {
 const isNatural = v => v && /(natural|neural|enhanced|premium|google)/i.test(v.name);
 const splitSent = s => String(s || '').replace(/\s+/g, ' ').trim().match(/[^.!?…]+(?:[.!?…]+["”’]?|$)/g)?.map(x => x.trim()).filter(Boolean) || [];
 function buildQueue(s) {
-  const q = [], add = x => { if (typeof x === 'string' || x.s) q.push({who: 'shasha', text: typeof x === 'string' ? x : x.s}); else if (x.m) q.push({who: 'miaw', text: x.m, act: x.act}); else if (x.sign) q.push({who: 'sign', text: x.sign, x: x.x, y: x.y, xm: x.xm, ym: x.ym}); else if (x.c) q.push({who: 'computer', text: x.c}); else if (x.video) q.push({who: 'video', text: '', src: x.video, hideCast: x.hideCast, sfx: x.sfx}); else splitSent(x.n).forEach(t => q.push({who: 'narr', text: t})); };
+  const q = [], add = x => { if (typeof x === 'string' || x.s) q.push({who: 'shasha', text: typeof x === 'string' ? x : x.s}); else if (x.m) q.push({who: 'miaw', text: x.m, act: x.act}); else if (x.sign) q.push({who: 'sign', text: x.sign, x: x.x, y: x.y, xm: x.xm, ym: x.ym}); else if (x.c) q.push({who: 'computer', text: x.c}); else if (x.video) q.push({who: 'video', text: '', src: x.video, hideCast: x.hideCast, sfx: x.sfx}); else if (x.sfx) q.push({who: 'sfx', text: '', sfx: x.sfx}); else splitSent(x.n).forEach(t => q.push({who: 'narr', text: t})); };
   (s.pre || []).forEach(add); if (!s.quiet) (SPEAK_OVERRIDE[s.art] || splitSent(s.desc)).forEach(t => q.push({who: 'narr', text: t})); (s.post || []).forEach(add);
   const n = String(SCENES.indexOf(s) + 1).padStart(2, '0'); q.forEach((x, k) => { x.id = `s${n}-${String(k + 1).padStart(2, '0')}`; });
   return q;
 }
-const readTime = s => Math.max(2.2, s.split(/\s+/).length * .36 + .6);
+const readTime = s => Math.max(1.1, (s.split(/\s+/).length * .36 + .6) / AF_SPEED);
 function playLine(tok) {
   if (tok !== AFV.token || AFV.paused) return;
   if (AFV.qi >= AFV.q.length) { setWho(null); return sceneDone(tok); }
@@ -3012,6 +3024,7 @@ function playLine(tok) {
   if (it.who === 'video') { sub.classList.remove('on'); switchVideo(it.src); if (it.hideCast) hideCast(); if (it.sfx === 'rumble') rumble(); hideBubble(); setTimeout(() => { if (tok !== AFV.token || AFV.paused) return; AFV.qi++; playLine(tok); }, 1500); return; }
   if (it.who === 'computer' && AC && AFV.music) beep();
   if (it.who === 'sign') { showSign(it); setTimeout(() => { hideSign(); if (tok !== AFV.token || AFV.paused) return; AFV.qi++; setTimeout(() => playLine(tok), 300); }, 3000); return; }
+  if (it.who === 'sfx') { playSfx(it.sfx); setTimeout(() => { if (tok !== AFV.token || AFV.paused) return; AFV.qi++; playLine(tok); }, 650); return; }
   if (it.act && typeof castAct === 'function') castAct(it.who, it.act);
   setWho(it.who); if (showBubble(it)) sub.classList.remove('on'); else showSub(it);
   let done = false; const st = performance.now();
@@ -3019,7 +3032,8 @@ function playLine(tok) {
     /* if the device has no voice (speech ends instantly), keep the line on screen for a normal reading time */
     const left = readTime(it.text) * 1000 * .8 - (performance.now() - st); if (AFV.voice && left > 0 && performance.now() - st < 600) { setTimeout(next, left); return; }
     done = true; clearTimeout(wd); hideBubble(); if (tok !== AFV.token || AFV.paused) return; AFV.qi++; setWho(null); setTimeout(() => playLine(tok), it.who === 'shasha' ? 420 : 260); };
-  if (it.who === 'miaw') { const d = AFV.voice ? catSay(it.text) : 0; setTimeout(() => { done = true; hideBubble(); if (tok !== AFV.token || AFV.paused) return; AFV.qi++; setWho(null); setTimeout(() => playLine(tok), 380); }, Math.max(d * 1000 + 250, AFV.voice ? 0 : 1600)); return; }
+  /* Miaw Miaw's meow is a synthesised sound effect, not speech — it no longer depends on the "voice" (TTS) toggle, only on "music"/sound */
+  if (it.who === 'miaw') { const d = AFV.music ? catSay(it.text) : 0; setTimeout(() => { done = true; hideBubble(); if (tok !== AFV.token || AFV.paused) return; AFV.qi++; setWho(null); setTimeout(() => playLine(tok), 380); }, Math.max(d * 1000 + 250, AFV.music ? 0 : 1600)); return; }
   const wd = setTimeout(next, (readTime(it.text) * (AFV.voice ? 2.2 : 1) + (AFV.voice ? 4 : 0)) * 1000);
   if (AFV.voice && USE_RECORDED_VOICES && it.id) {
     /* a recorded human voice file, if the team has added one: voice/s01-01.mp3 … (see voice-lines.txt) */
@@ -3045,7 +3059,7 @@ function startScene(i) {
   if (s.track) startTrack(s.track); else releaseTrack(1400);
   if (!trackOn()) startMood(s.music ? 'midi:' + s.music : (MOOD_OF[s.art] || 'wonder'));
   hideBubble(); hideSign();
-  setTimeout(() => playLine(tok), 900);
+  setTimeout(() => playLine(tok), 400);
 }
 
 /* ---------- on-scene UI ---------- */
@@ -3057,7 +3071,8 @@ ui.innerHTML = `<div class="af-ctrl" role="toolbar" aria-label="Story controls">
   <button type="button" data-k="pause" aria-label="Pause the story">⏸</button>
   <button type="button" data-k="voice" aria-label="Voices on or off">🗣️</button>
   <button type="button" data-k="music" aria-label="Music on or off">🎵</button>
-  <button type="button" data-k="cc" aria-label="Subtitles on or off">CC</button></div>
+  <button type="button" data-k="cc" aria-label="Subtitles on or off">CC</button>
+  <button type="button" data-k="speed" aria-label="Narration playback speed">1x</button></div>
 <div class="af-chip" aria-live="polite"><small></small><b></b></div>
 <div class="af-speaker" aria-hidden="true"><canvas width="128" height="128"></canvas><i></i><i></i><i></i></div>
 <div class="af-sub" aria-live="polite"><b></b><span></span></div>
@@ -3076,6 +3091,7 @@ function syncCtrl() {
   b('voice').classList.toggle('off', !AFV.voice); b('voice').setAttribute('aria-pressed', AFV.voice); b('voice').disabled = !window.speechSynthesis;
   b('music').classList.toggle('off', !AFV.music); b('music').setAttribute('aria-pressed', AFV.music);
   b('cc').classList.toggle('off', !AFV.cc); b('cc').setAttribute('aria-pressed', AFV.cc);
+  b('speed').textContent = AF_SPEED + 'x'; b('speed').setAttribute('aria-label', 'Narration playback speed: ' + AF_SPEED + 'x, tap to change');
 }
 ctrl.addEventListener('click', e => {
   const k = e.target.closest('button')?.dataset.k; if (!k) return; e.stopPropagation(); audioInit();
@@ -3083,6 +3099,7 @@ ctrl.addEventListener('click', e => {
   if (k === 'voice') { AFV.voice = !AFV.voice; save('voice', AFV.voice); if (!AFV.voice) { AFV.cc = true; save('cc', true); } if (window.speechSynthesis) speechSynthesis.cancel(); const tok = ++AFV.token; setWho(null); if (!AFV.paused) playLine(tok); }
   if (k === 'music') { AFV.music = !AFV.music; save('music', AFV.music); musicLevel(); }
   if (k === 'cc') { AFV.cc = !AFV.cc; save('cc', AFV.cc); if (!AFV.cc) sub.classList.remove('on'); else if (AFV.q[AFV.qi]) showSub(AFV.q[AFV.qi]); }
+  if (k === 'speed') { AF_SPEED = AF_SPEED >= 2 ? 1 : AF_SPEED + 0.5; saveSpeed(AF_SPEED); }
   syncCtrl();
 });
 let chipT = 0; function showChip(s) { chip.querySelector('small').textContent = s.badge; chip.querySelector('b').textContent = s.title; chip.classList.add('on'); clearTimeout(chipT); chipT = setTimeout(() => chip.classList.remove('on'), 4200); }
@@ -3106,6 +3123,22 @@ function rumble() {
   [[90, 1.2, .5], [380, 2, .18]].forEach(([fq, q, v]) => { const s = AC.createBufferSource(), f = AC.createBiquadFilter(), g = AC.createGain(); s.buffer = noiseBuf; s.loop = true; f.type = 'lowpass'; f.frequency.value = fq; f.Q.value = q;
     g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + .5); g.gain.setValueAtTime(v, t + 1.8); g.gain.exponentialRampToValueAtTime(0.0001, t + 6); s.connect(f); f.connect(g); g.connect(out); s.start(t); s.stop(t + 6.2); });
 }
+/* ---------- narrator sound effects: 'land' = whoosh + clunk + hiss, for the rocket touching down ---------- */
+function playSfx(name) {
+  audioInit(); const out = catBus(); if (!out || !AFV.music) return; const t = AC.currentTime;
+  if (name === 'land') {
+    const s1 = AC.createBufferSource(), f1 = AC.createBiquadFilter(), g1 = AC.createGain(); s1.buffer = noiseBuf; f1.type = 'bandpass'; f1.Q.value = 1.1;
+    f1.frequency.setValueAtTime(2600, t); f1.frequency.exponentialRampToValueAtTime(260, t + .5);
+    g1.gain.setValueAtTime(0.0001, t); g1.gain.exponentialRampToValueAtTime(.22, t + .08); g1.gain.exponentialRampToValueAtTime(0.0001, t + .55);
+    s1.connect(f1); f1.connect(g1); g1.connect(out); s1.start(t); s1.stop(t + .6);
+    const o2 = AC.createOscillator(), g2 = AC.createGain(); o2.type = 'sine'; o2.frequency.setValueAtTime(140, t + .45); o2.frequency.exponentialRampToValueAtTime(55, t + .58);
+    g2.gain.setValueAtTime(0.0001, t + .45); g2.gain.exponentialRampToValueAtTime(.4, t + .46); g2.gain.exponentialRampToValueAtTime(0.0001, t + .62);
+    o2.connect(g2); g2.connect(out); o2.start(t + .45); o2.stop(t + .64);
+    const s3 = AC.createBufferSource(), f3 = AC.createBiquadFilter(), g3 = AC.createGain(); s3.buffer = noiseBuf; s3.loop = true; f3.type = 'highpass'; f3.frequency.value = 3200;
+    g3.gain.setValueAtTime(0.0001, t + .55); g3.gain.linearRampToValueAtTime(.09, t + .7); g3.gain.setValueAtTime(.09, t + 1.3); g3.gain.exponentialRampToValueAtTime(0.0001, t + 1.9);
+    s3.connect(f3); f3.connect(g3); g3.connect(out); s3.start(t + .55); s3.stop(t + 2);
+  }
+}
 /* ---------- page transition: soft blur + whoosh ---------- */
 function pageTransition() {
   const v = document.getElementById('story-video-bg'), c = document.querySelector('.af-cast');
@@ -3120,16 +3153,25 @@ function pageTransition() {
 /* ---------- speech bubbles over the talking character ---------- */
 const bub = document.createElement('div'); bub.className = 'af-bubble'; bub.setAttribute('aria-live', 'polite'); bub.innerHTML = '<b></b><span></span>'; document.getElementById('story-engine').appendChild(bub);
 let typeT = 0;
-function showBubble(it) {
-  const fig = document.querySelector(`.af-castfig[data-who="${it.who}"]`); if (!fig || (it.who !== 'shasha' && it.who !== 'miaw')) return false;
-  const r = fig.getBoundingClientRect(), er = document.getElementById('story-engine').getBoundingClientRect(); if (!r.height) return false;
+function placeBubble(it, fig) {
+  const er = document.getElementById('story-engine').getBoundingClientRect(), r = fig.getBoundingClientRect();
   bub.querySelector('b').textContent = it.who === 'shasha' ? 'Shasha' : 'Miaw Miaw'; bub.dataset.who = it.who;
   const sp = bub.querySelector('span'); sp.textContent = ''; const full = it.text; let k = 0; clearInterval(typeT);
   const speed = Math.max(18, Math.min(55, readTime(full) * 1000 / Math.max(1, full.length) * .8));
   typeT = setInterval(() => { k += 1; sp.textContent = full.slice(0, k); if (k >= full.length) clearInterval(typeT); }, speed);
   const cx = r.left + r.width / 2 - er.left, top = r.top - er.top + r.height * (it.who === 'miaw' ? .06 : .02);
   const bw = Math.min(340, er.width * .8), left = Math.max(bw / 2 + 12, Math.min(er.width - bw / 2 - 12, cx));
-  bub.style.left = left + 'px'; bub.style.setProperty('--tail', Math.max(-bw / 2 + 24, Math.min(bw / 2 - 24, cx - left)) + 'px'); bub.style.top = Math.max(118, top) + 'px'; bub.classList.add('on'); return true;
+  bub.style.left = left + 'px'; bub.style.setProperty('--tail', Math.max(-bw / 2 + 24, Math.min(bw / 2 - 24, cx - left)) + 'px'); bub.style.top = Math.max(118, top) + 'px'; bub.classList.add('on');
+}
+/* shows the bubble the instant a character's line starts; if the figure hasn't laid out yet
+   (e.g. right after a scene/video transition) it retries on the next frame instead of
+   silently skipping to the caption bar, so the bubble never appears "late" */
+function showBubble(it, tries) {
+  tries = tries || 0;
+  const fig = document.querySelector(`.af-castfig[data-who="${it.who}"]`); if (!fig || (it.who !== 'shasha' && it.who !== 'miaw')) return false;
+  const r = fig.getBoundingClientRect();
+  if (!r.height) { if (tries < 10) requestAnimationFrame(() => showBubble(it, tries + 1)); return true; }
+  placeBubble(it, fig); return true;
 }
 function hideBubble() { clearInterval(typeT); bub.classList.remove('on'); }
 /* ---------- glowing screen signs from the script (e.g. ROCKET DESTINATION: MARS) ---------- */
@@ -3319,4 +3361,56 @@ palBtn.addEventListener('pointerenter', () => { palHover = true; }); palBtn.addE
 })();
 </script>
 <!-- ===== END OF ASTROFRONTIER STORY ADD-ON ===== -->
+
+<!-- ===== CHAPTER MENU + OBVIOUS SCROLL BUTTON ===== -->
+<style>
+#chapter-menu{position:fixed;inset:0;z-index:390;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:max(84px,calc(env(safe-area-inset-top,0px) + 84px)) max(18px,env(safe-area-inset-left,0px)) max(28px,calc(env(safe-area-inset-bottom,0px) + 28px));background:radial-gradient(ellipse at 50% 30%,rgba(26,32,96,.96) 0%,rgba(7,9,30,.98) 70%);opacity:0;pointer-events:none;transition:opacity .4s ease;overflow-y:auto}
+#chapter-menu.open{opacity:1;pointer-events:auto}
+.chm-head{text-align:center}
+.chm-head h2{font-family:var(--font-head);font-size:clamp(1.7rem,5vw,3rem);color:var(--fg);text-wrap:balance}
+.chm-head p{margin-top:8px;color:var(--fg2);font-weight:700;font-size:.95rem}
+.chm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:min(1080px,100%)}
+@media(max-width:820px){.chm-grid{grid-template-columns:repeat(2,1fr)}}
+.chm-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:8px;min-height:clamp(170px,38vh,340px);padding:18px;border-radius:var(--r);border:2px solid var(--border);background:var(--card);color:var(--fg);text-align:left;font-family:var(--font-body);cursor:pointer;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}
+.chm-card .chm-num{font-family:var(--font-head);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.chm-card .chm-title{font-family:var(--font-head);font-size:clamp(1.05rem,2.2vw,1.45rem);line-height:1.15;text-wrap:balance}
+.chm-card .chm-go{margin-top:6px;font-weight:800;font-size:.8rem;color:#1a0a00;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:999px;padding:7px 16px}
+.chm-card.ready{background:linear-gradient(to top,rgba(7,9,30,.92) 10%,rgba(7,9,30,.25) 70%),radial-gradient(ellipse at 60% 20%,#c8600a 0%,#3a1560 55%,#111b4a 100%);border-color:rgba(255,209,102,.5)}
+.chm-card.ready:hover,.chm-card.ready:focus-visible{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 10px 40px rgba(255,159,28,.35);outline:none}
+.chm-card.blank{cursor:default;border-style:dashed;background:rgba(17,27,74,.45)}
+.chm-card.blank .chm-num{color:var(--fg2)}
+.chm-card.blank .chm-title{color:rgba(143,163,208,.55)}
+.chm-close{position:absolute;top:max(76px,calc(env(safe-area-inset-top,0px) + 76px));right:max(20px,env(safe-area-inset-right,0px));width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);color:var(--fg2);font-size:1rem;cursor:pointer}
+.chm-close:hover{background:rgba(239,71,111,.2);color:var(--pink)}
+
+/* scroll-down button: big and obvious once the voices finish */
+.af-next{gap:6px;font-size:1rem}
+.af-next.on{opacity:1}
+.af-next span{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#1a0a00;border:0;padding:13px 28px;text-shadow:none;box-shadow:0 4px 26px rgba(255,159,28,.6);animation:afNextPulse 1.7s ease-in-out infinite}
+.af-next i{font-size:2.2rem;line-height:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.7))}
+@keyframes afNextPulse{0%,100%{box-shadow:0 4px 26px rgba(255,159,28,.6),0 0 0 0 rgba(255,209,102,.65)}50%{box-shadow:0 4px 26px rgba(255,159,28,.6),0 0 0 16px rgba(255,209,102,0)}}
+@media(min-width:721px){.af-next{left:50%;align-items:center;transform:translate(-50%,10px)}.af-next.on{transform:translate(-50%,0)}}
+@media(prefers-reduced-motion:reduce){.af-next span{animation:none}}
+</style>
+<div id="chapter-menu" role="dialog" aria-modal="true" aria-label="Choose a chapter" aria-hidden="true">
+  <button class="chm-close" type="button" onclick="closeChapterMenu()" aria-label="Close chapters">✕</button>
+  <div class="chm-head"><h2>Choose a chapter</h2><p>Four chapters. Pick one to begin the story.</p></div>
+  <div class="chm-grid">
+    <button class="chm-card ready" type="button" onclick="startChapter(1)"><span class="chm-num">Chapter 1</span><span class="chm-title">The Forgotten Heroes of Mars</span><span class="chm-go">▶ Start</span></button>
+    <div class="chm-card blank" aria-disabled="true"><span class="chm-num">Chapter 2</span><span class="chm-title">Coming soon</span></div>
+    <div class="chm-card blank" aria-disabled="true"><span class="chm-num">Chapter 3</span><span class="chm-title">Coming soon</span></div>
+    <div class="chm-card blank" aria-disabled="true"><span class="chm-num">Chapter 4</span><span class="chm-title">Coming soon</span></div>
+  </div>
+</div>
+<script>
+(function(){
+  var menu = document.getElementById('chapter-menu');
+  window.openChapterMenu = function(){ menu.classList.add('open'); menu.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; var c = menu.querySelector('.chm-card.ready'); if (c) setTimeout(function(){ c.focus(); }, 60); };
+  window.closeChapterMenu = function(){ menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); document.body.style.overflow=''; };
+  /* Chapter 1 holds the whole current story; chapters 2-4 are empty for now */
+  window.startChapter = function(n){ if (n !== 1) return; closeChapterMenu(); openStory(); };
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && menu.classList.contains('open')) closeChapterMenu(); });
+})();
+</script>
+<!-- ===== END OF CHAPTER MENU ===== -->
 </body></html>
